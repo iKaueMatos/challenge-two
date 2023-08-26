@@ -28,9 +28,12 @@ describe("Likes", () => {
     });
   });
 
-  it("should not be able to give a like to a non existing repository", async () => {
-    await request(app)
-      .post(`/repositories/123/like`)
-      .expect(404);
+  it("should not be able to update repository likes manually", async () => {
+    const response = await request(app)
+      .post("/repositories/123/like")
+      .send();
+  
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty("error");
   });
 });
